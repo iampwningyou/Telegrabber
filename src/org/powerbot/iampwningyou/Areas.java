@@ -5,9 +5,6 @@ import org.powerbot.script.Tile;
 
 public final class Areas {
 
-	public static final Area ZAMORAK_PLACE = 
-			new Area(new Tile(2931, 3516), new Tile(2936, 3514));
-	
 	public static final Area FALADOR = 
 			new Area(new Tile(2937, 3385), new Tile(2974, 3365));
 	
@@ -24,6 +21,7 @@ public final class Areas {
 			new Tile(2931, 3516, 0), new Tile(2936, 3517, 0),
 								     new Tile(2936, 3517, 0),
 		    new Tile(2931, 3514, 0));
+//			new Tile(3200, 3200), new Tile(3300, 3300));
 	
 	private Areas() {
 		

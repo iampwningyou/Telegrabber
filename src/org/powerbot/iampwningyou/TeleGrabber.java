@@ -2,15 +2,16 @@ package org.powerbot.iampwningyou;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Point;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 import org.powerbot.iampwningyou.tasks.BankDepositWines;
 import org.powerbot.iampwningyou.tasks.CastTelegrab;
+import org.powerbot.iampwningyou.tasks.MoveCamera;
 import org.powerbot.iampwningyou.tasks.MoveToChaosTemple;
 import org.powerbot.iampwningyou.tasks.MoveToFallyBank;
-import org.powerbot.iampwningyou.tasks.OpenMagicTab;
 import org.powerbot.iampwningyou.tasks.PrepareTelegrab;
 import org.powerbot.iampwningyou.tasks.TaskRT4;
 import org.powerbot.iampwningyou.tasks.TeleportToFalador;
@@ -27,28 +28,41 @@ public class TeleGrabber extends PollingScript<ClientContext> implements PaintLi
 	private List <TaskRT4<ClientContext>> taskList = new ArrayList<TaskRT4<ClientContext>>();
 	
 	public static int thingsTelegrabbed = 0;
-	
+	public static Point UNINITIALIZED_POINT = new Point(-1, -1);
+	public static Point lastItemPoint = UNINITIALIZED_POINT;
 	public static String task = "";
+
+	public static int inventoryCount;
 	
+	@SuppressWarnings("unchecked")
 	public TeleGrabber() {
 		taskList.addAll(Arrays.asList(
 				new CastTelegrab(ctx),
-				new PrepareTelegrab(ctx),
 				new TeleportToFalador(ctx),
 				new MoveToFallyBank(ctx),
 				new BankDepositWines(ctx),
-				new MoveToChaosTemple(ctx)
+				new MoveToChaosTemple(ctx),
+				new MoveCamera(ctx),
+				new PrepareTelegrab(ctx)
 				));
 	}
 
 	@Override
 	public void poll() {
 		for (TaskRT4<ClientContext> task : taskList) {
-			if (task.activate()){
+			long startTime = System.nanoTime();
+			boolean shouldActivate = task.activate();
+			long endTime = System.nanoTime();
+			
+			System.out.println("Task Activate Time (" + task.getClass().getName() + "): " + (endTime - startTime) + "ns");
+			
+			if (shouldActivate){
 				task.execute();
 				System.out.println(TeleGrabber.task);
 			}
 		}
+		
+		System.out.println("");
 	}
 
 	public static void stop(ClientContext _ctx) {
@@ -81,7 +95,7 @@ public class TeleGrabber extends PollingScript<ClientContext> implements PaintLi
 		paintStrs.add("iampwningyou's Wine Grabber");
 		
 		paintStrs.add("Runtime: " + secondRuntime + "s");
-		
+		paintStrs.add("Inventory Count: " + inventoryCount);
 		if (thingsTelegrabbed > 0) {
 			paintStrs.add("Things telegrabbed: " + thingsTelegrabbed);
 			paintStrs.add("Thing/Hour: " + thingPerHour);

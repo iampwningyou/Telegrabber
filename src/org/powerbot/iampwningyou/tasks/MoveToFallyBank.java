@@ -3,6 +3,7 @@ package org.powerbot.iampwningyou.tasks;
 import java.util.concurrent.Callable;
 
 import org.powerbot.iampwningyou.Areas;
+import org.powerbot.iampwningyou.InventoryHelper;
 import org.powerbot.iampwningyou.TeleGrabber;
 import org.powerbot.iampwningyou.resources.ids.ItemIds;
 import org.powerbot.script.Condition;
@@ -31,14 +32,13 @@ public class MoveToFallyBank extends TaskRT4<ClientContext> {
 	public boolean activate() {
 		return Areas.FALADOR.contains(ctx.players.local().tile())
 				&& ctx.players.local().animation() == -1
-				&& ctx.inventory.items().length == 28
+				&& TeleGrabber.inventoryCount == 28
 				&& !ctx.bank.opened();
 	}
 
 	@Override
 	public void execute() {
 		TeleGrabber.task = "Moving to Fally Bank";
-		System.out.println("Moving to Fally Bank.");
 		
 		Condition.wait(new Callable<Boolean>() {
 			

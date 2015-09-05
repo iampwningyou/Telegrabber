@@ -3,6 +3,7 @@ package org.powerbot.iampwningyou.tasks;
 
 import java.util.concurrent.Callable;
 
+import org.powerbot.iampwningyou.InventoryHelper;
 import org.powerbot.iampwningyou.TeleGrabber;
 import org.powerbot.iampwningyou.Areas;
 import org.powerbot.iampwningyou.resources.ids.ItemIds;
@@ -45,14 +46,13 @@ public class MoveToChaosTemple extends TaskRT4<ClientContext> {
 			new Tile(2941,3503,0),// near timber defence
 			new Tile(2941,3511,0),//
 			new Tile(2942,3517,0),// entrance of church
-			new Tile(2935,3516,0),//
 			new Tile(2931,3515,0)// at the wine
 	};
 	private final TilePath to_ChaosTemple = ctx.movement.newTilePath(tiles);
 	@Override
 	public boolean activate() {
-		return Areas.FALADOR_BANK.contains(ctx.players.local().tile())
-				&& ctx.inventory.items().length < 28;
+		return Areas.FALADOR.contains(ctx.players.local().tile())
+				&& TeleGrabber.inventoryCount < 28;
 	}
 
 	@Override
@@ -63,7 +63,7 @@ public class MoveToChaosTemple extends TaskRT4<ClientContext> {
 			
 			public Boolean call() throws Exception {
 				to_ChaosTemple.traverse();
-				return Areas.CHAOS_TEMPLE.contains(ctx.players.local().tile());
+				return Areas.CHAOS_TEMPLE.contains(ctx.players.local().tile()) || ctx.controller.isStopping() || ctx.controller.isSuspended();
 			}
 		}, 1000, 100);
 	}

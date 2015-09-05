@@ -1,5 +1,6 @@
 package org.powerbot.iampwningyou.tasks;
 
+import org.powerbot.iampwningyou.InventoryHelper;
 import org.powerbot.iampwningyou.TeleGrabber;
 import org.powerbot.iampwningyou.Areas;
 import org.powerbot.iampwningyou.resources.ids.ItemIds;
@@ -21,12 +22,9 @@ public class BankDepositWines extends TaskRT4<ClientContext> {
 	@Override
 	public void execute() {
 		TeleGrabber.task = "Depositing Stuff";
-		
-		if (ctx.inventory.select().id(ItemIds.WINE_OF_ZAMORAK).count() > 0) {
-			ctx.bank.deposit(ItemIds.WINE_OF_ZAMORAK, Amount.ALL);
-		} else {
-			ctx.bank.close();
-		}
+		ctx.bank.deposit(ItemIds.WINE_OF_ZAMORAK, Amount.ALL);
+		TeleGrabber.inventoryCount = ctx.inventory.count();
+		ctx.bank.close();
 	}
 
 }
