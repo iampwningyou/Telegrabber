@@ -66,6 +66,7 @@ public class MoveToChaosTemple extends TaskRT4<ClientContext> {
 				return Areas.CHAOS_TEMPLE.contains(ctx.players.local().tile()) || ctx.controller.isStopping() || ctx.controller.isSuspended();
 			}
 		}, 1000, 100);
+		
+		ctx.movement.step(new Tile(2931,3515,0));
 	}
-
 }

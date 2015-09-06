@@ -18,9 +18,7 @@ public final class Areas {
 					new Tile(2942, 3368));
 	
 	public static final Area CHAOS_TEMPLE = new Area(
-			new Tile(2931, 3516, 0), new Tile(2936, 3517, 0),
-								     new Tile(2936, 3517, 0),
-		    new Tile(2931, 3514, 0));
+			new Tile(2920, 3520, 0), new Tile(2940, 3500, 0));
 //			new Tile(3200, 3200), new Tile(3300, 3300));
 	
 	private Areas() {

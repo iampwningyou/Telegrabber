@@ -9,7 +9,9 @@ import org.powerbot.iampwningyou.TeleGrabber;
 import org.powerbot.iampwningyou.resources.ids.ItemIds;
 import org.powerbot.script.Condition;
 import org.powerbot.script.Tile;
+import org.powerbot.script.rt4.BasicQuery;
 import org.powerbot.script.rt4.ClientContext;
+import org.powerbot.script.rt4.GroundItem;
 import org.powerbot.script.rt4.Magic.Spell;
 
 public class PrepareTelegrab extends TaskRT4<ClientContext> {
@@ -32,12 +34,14 @@ public class PrepareTelegrab extends TaskRT4<ClientContext> {
 	public void execute() {
 		TeleGrabber.task = "Preparing for Telegrab";
 //		ctx.widgets.component(218, 20).click();
+		ctx.movement.step(new Tile(2931,3515,0));
+		Condition.sleep(50);
 		ctx.input.send("{VK_ESCAPE down}");
-		Condition.sleep();
+		Condition.sleep(50);
 		ctx.input.send("{VK_ESCAPE up}");
-		Condition.sleep();
+		Condition.sleep(50);
 		TeleGrabber.inventoryCount = InventoryHelper.get_inventory_count(ctx.inventory.items());
-		Condition.sleep();
+		Condition.sleep(50);
 		
 		if (TeleGrabber.inventoryCount >= 28) {
 			return;
@@ -57,14 +61,6 @@ public class PrepareTelegrab extends TaskRT4<ClientContext> {
 			TeleGrabber.task = "Moving mouse to last point";
 			ctx.input.move(TeleGrabber.lastItemPoint);
 		}
-
-//		Condition.wait(new Callable<Boolean>() {
-//			
-//			public Boolean call() throws Exception {
-//				
-//				return ctx.groundItems.select().id(ItemIds.WINE_OF_ZAMORAK).size() > 0;
-//			}
-//		}, 1, 10);
 	}
 
 }

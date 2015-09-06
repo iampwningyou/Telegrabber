@@ -31,7 +31,7 @@ public class TeleportToFalador extends TaskRT4<ClientContext> {
 		}
 		Condition.sleep();
 		ctx.magic.cast(Spell.FALADOR_TELEPORT);
-		Condition.sleep();
+		Condition.sleep(6000);
 	}
 
 }
